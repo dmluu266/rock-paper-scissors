@@ -7,17 +7,77 @@
     <title>Document</title>
 </head>
 <body>
-    <script>    
-        console.log("Hey there")
+    <script>       
 
-        const hand = ['rock', 'paper', 'scissors'];
-        function getComputerChoice(hand) {
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function getComputerChoice() {
+            const hand = ['rock', 'paper', 'scissors'];
             const randomHand = hand[Math.floor(Math.random()*hand.length)];
             return randomHand
             
         }
-        const play = getComputerChoice(hand);
-        console.log(play)
+        
+        function playRound(playerSelection, computerSelection) {
+            console.log(playerSelection + " vs " + computerSelection)
+
+            if (playerSelection == 'rock') {
+                if (computerSelection == 'paper') {
+                    return loseOutput(playerSelection, computerSelection)
+                }
+                else if (computerSelection == 'scissors') {
+                    return winOutput(playerSelection, computerSelection)
+                }
+                else {
+                    return tieOutput()
+                }
+            }
+            else if (playerSelection == 'paper') {
+                if (computerSelection == 'rock') {
+                    return winOutput(playerSelection, computerSelection)
+                }
+                else if (computerSelection == 'scissors') {
+                    return loseOutput(playerSelection, computerSelection)
+                }
+                else {
+                    return tieOutput()
+                }
+            }
+            else if (playerSelection == 'scissors') {
+                if (computerSelection == 'rock') {
+                    return loseOutput(playerSelection, computerSelection)
+                }
+                else if (computerSelection == 'paper') {
+                    return winOutput(playerSelection, computerSelection)
+                }
+                else {
+                    return tieOutput()
+                }
+            }
+        }
+
+        function loseOutput(player, computer) {
+            computerScore += 1;
+            return `You lose! ${computer} beats ${player}`
+        }
+
+        function winOutput(player, computer) {
+            playerScore += 1;
+            return `You win! ${player} beats ${computer}`
+        }
+
+        function tieOutput() {
+            return "It's a Tie!"
+
+        }
+
+        for (i = 0; i < 5; i++) {
+            const playerChoice = prompt("What do you play?")
+            console.log(playRound(playerChoice, getComputerChoice()))
+        }
+        
+        console.log(`Player score: ${playerScore} \nComputer Score: ${computerScore}`)
     </script>
 </body>
 </html>
