@@ -7,6 +7,12 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="container">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <p id="currentGame"></p>
     <script>       
 
         let playerScore = 0;
@@ -59,25 +65,76 @@
 
         function loseOutput(player, computer) {
             computerScore += 1;
-            return `You lose! ${computer} beats ${player}`
+            return "lose"
         }
 
         function winOutput(player, computer) {
             playerScore += 1;
-            return `You win! ${player} beats ${computer}`
+            return "win"
         }
 
         function tieOutput() {
-            return "It's a Tie!"
+            return "tie"
 
         }
 
-        for (i = 0; i < 5; i++) {
-            const playerChoice = prompt("What do you play?")
-            console.log(playRound(playerChoice, getComputerChoice()))
-        }
+        // click event for buttons
+        const buttons = document.querySelectorAll('button');
         
-        console.log(`Player score: ${playerScore} \nComputer Score: ${computerScore}`)
+        let rounds = 0;
+        let wins = 0;
+        let losses = 0;
+        let ties = 0;
+        const res = document.getElementById('currentGame');
+        const currentResult = document.createElement('p');
+        // forEach iterates through each button
+        buttons.forEach((button) => {
+            // for each button, add a click listener
+            button.addEventListener('click', () => {
+                // play a round and return result
+                npcHand = getComputerChoice();
+                result = playRound(button.id, npcHand);
+
+
+                if (result == "win") {
+                    wins++;
+                    currentResult.textContent = `Nice! ${button.id} beats ${npcHand}`;
+                } 
+                else if (result == "lose") {
+                    losses++;
+                    currentResult.textContent = `Oop. ${button.id} loses to ${npcHand}`;
+                }
+                else {
+                    ties++;
+                    currentResult.textContent = `Tie! ${button.id} vs ${npcHand}`
+                }
+                // initial round
+                if (rounds == 0) {
+                    res.parentNode.replaceChild(currentResult, res);
+                }
+                rounds++;
+
+                // display results after player or computer wins 5 times
+                if (wins == 5 || losses == 5) {
+                    // display results
+                    const displayResults = document.createElement('div');
+                    
+                    document.body.appendChild(displayResults);
+                    displayResults.textContent = `Wins: ${wins} \n Losses: ${losses} \n Ties: ${ties}`;
+
+                    // display the victor
+                    const result = document.createElement('div');
+                    document.body.appendChild(result);
+
+                    if (wins > losses) {
+                        result.textContent = "You win!";
+                    }
+                    else if (losses > wins) {
+                        result.textContent = "You lose!";
+                    }
+                }
+            })
+        })
     </script>
 </body>
 </html>
