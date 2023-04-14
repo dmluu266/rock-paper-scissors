@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock-Paper-Scissors</title>
 </head>
 <body>
     <div id="container">
@@ -14,10 +14,7 @@
     </div>
     <p id="currentGame"></p>
     <script>       
-
-        let playerScore = 0;
-        let computerScore = 0;
-
+        // random computer hand
         function getComputerChoice() {
             const hand = ['rock', 'paper', 'scissors'];
             const randomHand = hand[Math.floor(Math.random()*hand.length)];
@@ -25,58 +22,46 @@
             
         }
         
+        // playing a round
         function playRound(playerSelection, computerSelection) {
-            console.log(playerSelection + " vs " + computerSelection)
-
+            // possibilities for rock
             if (playerSelection == 'rock') {
                 if (computerSelection == 'paper') {
-                    return loseOutput(playerSelection, computerSelection)
+                    return "lose"
                 }
                 else if (computerSelection == 'scissors') {
-                    return winOutput(playerSelection, computerSelection)
+                    return "win"
                 }
                 else {
-                    return tieOutput()
+                    return "tie"
                 }
             }
+            // possibilties for paper
             else if (playerSelection == 'paper') {
                 if (computerSelection == 'rock') {
-                    return winOutput(playerSelection, computerSelection)
+                    return "win"
                 }
                 else if (computerSelection == 'scissors') {
-                    return loseOutput(playerSelection, computerSelection)
+                    return "lose"
                 }
                 else {
-                    return tieOutput()
+                    return "tie"
                 }
             }
+            // possibilities for scissors
             else if (playerSelection == 'scissors') {
                 if (computerSelection == 'rock') {
-                    return loseOutput(playerSelection, computerSelection)
+                    return "lose"
                 }
                 else if (computerSelection == 'paper') {
-                    return winOutput(playerSelection, computerSelection)
+                    return "win"
                 }
                 else {
-                    return tieOutput()
+                    return "tie"
                 }
             }
         }
 
-        function loseOutput(player, computer) {
-            computerScore += 1;
-            return "lose"
-        }
-
-        function winOutput(player, computer) {
-            playerScore += 1;
-            return "win"
-        }
-
-        function tieOutput() {
-            return "tie"
-
-        }
 
         // click event for buttons
         const buttons = document.querySelectorAll('button');
@@ -85,8 +70,12 @@
         let wins = 0;
         let losses = 0;
         let ties = 0;
+
+        // edit res element to display current round result
         const res = document.getElementById('currentGame');
         const currentResult = document.createElement('p');
+
+
         // forEach iterates through each button
         buttons.forEach((button) => {
             // for each button, add a click listener
